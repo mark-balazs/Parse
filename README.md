@@ -32,7 +32,7 @@ Object structure:
 
 Note: The objects are separated into two arrays: Defects(bugs) and UserStories.
 
-Example for a .json file:
+Example for the .json file:
 =====
 
 ```

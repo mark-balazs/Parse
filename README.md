@@ -1,4 +1,7 @@
 Parse
+=
+
+Project 1: Parse
 ==
 
 An application to create .json files using data from .csv files or from keyboard.
@@ -56,3 +59,20 @@ Example for the .json file:
     ]
 }
 ```
+
+Project 2: DevReport
+==
+
+A script used for creating .xlsx files (reports) from .scv files.
+
+Task
+=====
+Create a script to make reports out of given .csv files:
+* The script will be run from command line, make sure to set shortcuts and aliases;
+* The file will be passed as argument;
+
+Description:
+=====
+* The script extracts the .csv file to tokens(fields);
+* Certain fields are used (ex. Effort completed, Entity type etc.)
+* Data is filtered by developer names (for statistic purposes)

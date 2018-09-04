@@ -10,27 +10,30 @@ using static System.IO.File;
 
 namespace Parse
 {
-    internal partial class Program
+     public partial class Program
     {
         public class MainClass
         {
-            private string CsvFile { get; set; }
-            private string LogPath { get; set; }
-            private string Mode { get; set; }
-            private string[] Args { get; set; }
-            private int ArgNum { get; set; }
-            private MainObject mainObject { get; set; }
+            protected string CsvFile { get; set; }
+            protected string LogPath { get; set; }
+            protected string Mode { get; set; }
+            protected string[] Args { get; set; }
+            protected int ArgNum { get; set; }
+            protected MainObject MainObject { get; set; }
 
 
             public MainClass(string[] arguments)
             {
-                mainObject = new MainObject();
+                MainObject = new MainObject();
                 CsvFile = null;
                 LogPath = null;
                 Mode = null;
                 ArgNum = 0;
                 Args = arguments;
+            }
 
+            public void Parse()
+            {
                 GetArgsNumber();
                 SetFilePaths();
                 GetMode();
@@ -43,17 +46,17 @@ namespace Parse
                     ProcessCsv(ReadAllText(CsvFile));
                 if (ArgNum < 2)
                     GetDataFromKeyboard();
-                WriteAllText(LogPath, JsonConvert.SerializeObject(mainObject));
+                WriteAllText(LogPath, JsonConvert.SerializeObject(MainObject));
                 WriteLine("File saved at " + LogPath);
             }
 
-            private void GetArgsNumber()
+            protected void GetArgsNumber()
             {
                 foreach (string str in Args)
                     ArgNum++;
             }
 
-            private void SetFilePaths()
+            protected void SetFilePaths()
             {
                 switch (ArgNum)
                 {
@@ -77,7 +80,7 @@ namespace Parse
                 }
             }
 
-            private void GetMode()
+            protected void GetMode()
             {
                 bool answer = false;
                 while (!answer)
@@ -91,13 +94,13 @@ namespace Parse
                 }
             }
 
-            private void Deserialize()
+            protected void Deserialize()
             {
                 string data = ReadAllText(LogPath);
-                mainObject = JsonConvert.DeserializeObject<MainObject>(data);
+                MainObject = JsonConvert.DeserializeObject<MainObject>(data);
             }
 
-            private void GetVersion()
+            protected void GetVersion()
             {
                 if (Mode == "1")
                 {
@@ -106,44 +109,44 @@ namespace Parse
                 else
                 {
                     if (!File.Exists(LogPath))
-                        mainObject.AddVersion("1.0.0");
+                        MainObject.AddVersion("1.0.0");
                     else
                     {
                         if (CountDots() == 2)
                         {
-                            string[] vSplit = mainObject.Versions[0].VersionId.Split('.');
+                            string[] vSplit = MainObject.Versions[0].VersionId.Split('.');
                             int minor = Int32.Parse(vSplit[2]);
                             minor++;
                             vSplit[2] = minor.ToString();
                             string version = vSplit[0] + '.' + vSplit[1] + '.' + vSplit[2];
-                            mainObject.AddVersion(version);
+                            MainObject.AddVersion(version);
                         }
                         else if (CountDots() == 1)
-                            mainObject.Versions[0].VersionId += ".1";
+                            MainObject.Versions[0].VersionId += ".1";
                         else if (CountDots() == 0)
-                            mainObject.Versions[0].VersionId += ".0.1";
+                            MainObject.Versions[0].VersionId += ".0.1";
                     }
                 }
             }
 
-            private void GetVersionFromKeyboard()
+            protected void GetVersionFromKeyboard()
             {
                 WriteLine("Enter Version:");
-                mainObject.AddVersion(ReadLine());
+                MainObject.AddVersion(ReadLine());
                 if (CountDots() == 1)
                 {
-                    mainObject.Versions[0].VersionId += ".0";
+                    MainObject.Versions[0].VersionId += ".0";
                 }
                 else if (CountDots() == 0)
                 {
-                    mainObject.Versions[0].VersionId += ".0.0";
+                    MainObject.Versions[0].VersionId += ".0.0";
                 }
             }
 
-            private int CountDots()
+            protected int CountDots()
             {
                 int count = 0;
-                foreach (char c in mainObject.Versions[0].VersionId)
+                foreach (char c in MainObject.Versions[0].VersionId)
                 {
                     if (c == '.')
                         count++;
@@ -151,12 +154,12 @@ namespace Parse
                 return count;
             }
 
-            private void ProcessCsv(string data)
+            protected void ProcessCsv(string data)
             {
                     BuildEntities(GetTokens(DeleteCommas(data)));
             }
 
-            private string DeleteCommas(string data)
+            protected string DeleteCommas(string data)
             {
                 var data2 = data.ToCharArray();
                 bool str = false;
@@ -169,14 +172,14 @@ namespace Parse
                     }
                     if (a == ',' && str)
                     {
-                        data2[n] = ' ';
+                        data2[n] = ';';
                     }
                     n++;
                 }
                 return new string(data2);
             }
 
-            private List<string> GetTokens(string data)
+            protected List<string> GetTokens(string data)
             {
                 List<string> tokens = new List<string>();
                 foreach (string l in data.Split(','))
@@ -191,7 +194,7 @@ namespace Parse
                 return tokens;
             }
 
-            private void BuildEntities(List<string> tokens)
+            protected void BuildEntities(List<string> tokens)
             {
                 int index = 1;
                 while (index + 43 < tokens.Count())
@@ -200,48 +203,53 @@ namespace Parse
                     Entity ent = new Entity(tokens[index + 2], tokens[index + 1]);
                     if (tokens[index] == "Bug" && (tokens[index + 36] == "Done" || tokens[index + 36] == "Rejected" || tokens[index + 36] == "Integration Testing Passed"))
                     {
-                        mainObject.Versions[0].Changelog.Defects.Add(ent);
+                        MainObject.Versions[0].Changelog.Defects.Add(ent);
                     }
                     else if (tokens[index] == "UserStory" && (tokens[index + 36] == "Done" || tokens[index + 36] == "Rejected" || tokens[index + 36] == "Integration Testing Passed"))
                     {
-                        mainObject.Versions[0].Changelog.UserStories.Add(ent);
+                        MainObject.Versions[0].Changelog.UserStories.Add(ent);
                     }
                 }
             }
 
-            private void GetDataFromKeyboard()
+            protected void GetDataFromKeyboard()
             {
-                bool readFromKeyboard = false;
-                WriteLine("Would you like to add data manually? (ENTER/n)");
-                string decision = ReadLine();
-                string lastDecision = null;
-                readFromKeyboard = (decision == "");
-                while (readFromKeyboard)
+                string decision = "";
+                while(true)
                 {
-                    GetAnswer(lastDecision);
+                    WriteLine("Would you like to add data manually? (ENTER/n)");
+                    decision = ReadLine();
+                    if (decision == "" || decision == "n")
+                        break;
+                }
+                if (decision == "n")
+                    return;
+                string lastDecision = "";
+                while (true)
+                {
+                    decision = GetAnswer(lastDecision);
                     if (decision == "q")
                         break;
                     if (decision == "")
                         decision = lastDecision;
                     if (decision == "1")
                     {
-                        mainObject.Versions[0].Changelog.Defects.Add(GetEntityInfo());
+                        MainObject.Versions[0].Changelog.Defects.Add(GetEntityInfo());
                         WriteLine("[ENTER] - Add another bug.");
                     }
                     else if (decision == "2")
                     {
-                        mainObject.Versions[0].Changelog.UserStories.Add(GetEntityInfo());
+                        MainObject.Versions[0].Changelog.UserStories.Add(GetEntityInfo());
                         WriteLine("[ENTER] - Add another user story.");
                     }
                     lastDecision = decision;
                 }
             }
 
-            private string GetAnswer(string lastDecision)
+            protected string GetAnswer(string lastDecision)
             {
-                string decision = null;
-                bool answer = false;
-                while (!answer)
+                string decision = "";
+                while (true)
                 {
                     if (lastDecision != "1")
                         WriteLine("[1] - Bug");
@@ -249,13 +257,19 @@ namespace Parse
                         WriteLine("[2] - User story");
                     WriteLine("[q] - Finish adding data from keyboard");
                     decision = ReadLine();
-                    answer = (decision == "1" || decision == "2" || decision == "q" || (decision == "" && lastDecision != null));
+                    if (decision == "1")
+                        break;
+                    if (decision == "2")
+                        break;
+                    if (decision == "" && lastDecision != "")
+                        break;
                     if (decision == "q")
                         break;
+                    WriteLine(decision + "a");
                 }
                 return decision;
             }
-            private Entity GetEntityInfo()
+            protected Entity GetEntityInfo()
             {
                 Entity entity = new Entity();
                 WriteLine("Id:");

@@ -1,6 +1,6 @@
 ﻿namespace Parse
 {
-    internal partial class Program
+    public partial class Program
     {
         public class Entity
         {

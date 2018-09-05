@@ -2,7 +2,7 @@
 
 
 
-namespace Parse
+namespace MainLibrary
 {
     public partial class Program
     {

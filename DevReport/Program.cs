@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Parse.Program;
+using static MainLibrary.Program;
 using static System.Console;
 using static System.IO.File;
+using MainLibrary;
 
 
 namespace DevReport

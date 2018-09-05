@@ -1,5 +1,4 @@
-﻿using static Parse.Program;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +9,10 @@ using static System.IO.File;
 using static System.Environment;
 using static System.IO.Directory;
 using System.Runtime.InteropServices;
+using static MainLibrary.Program;
 
 
-namespace DevReport
+namespace MainLibrary
 {
     public class Reporter : MainClass
     {
@@ -42,7 +42,7 @@ namespace DevReport
             GetArgsNumber();
             if (ArgNum != 1)
             {
-                WriteLine("Usage: report 'filename' \n  Note: the filename should be an absolute path.");
+                WriteLine("Arguments do not meet the requirements for creating a report.");
                 Exit(0);
             }
         }
@@ -58,7 +58,7 @@ namespace DevReport
         {
             CsvFile = Args[0];
             //CsvFile = @"D:\Informatics\Intern projects\Parse\DevReport\sample.csv";
-            xlPath = GetCurrentDirectory() + "\\report.xlsx";
+            xlPath = GetCurrentDirectory() + "report.xlsx";
         }
 
         protected void BuildEntities()
@@ -82,7 +82,6 @@ namespace DevReport
                 {
                     var name = fullname.Split(')')[1];
                     name = FixTypos(name);
-                    WriteLine(name);
                     if (!Developers.Contains(name))
                         Developers.AddDeveloper(name);
                     if (tokens[index] == "Bug")
@@ -109,7 +108,6 @@ namespace DevReport
                 Developers.Container[Developers.Index(name)].USDone++;
             else
                 Developers.Container[Developers.Index(name)].USToDo++;
-            WriteLine(tokens[index + 15]);
             Developers.Container[Developers.Index(name)].Effort += Double.Parse(tokens[index + 15]);
         }
 

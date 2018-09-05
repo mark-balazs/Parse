@@ -8,7 +8,7 @@ using static System.IO.Directory;
 using static System.IO.File;
 
 
-namespace Parse
+namespace MainLibrary
 {
      public partial class Program
     {
@@ -283,6 +283,10 @@ namespace Parse
                 WriteLine("RequestUrl:");
                 entity.RequestUrl = ReadLine();
                 return entity;
+            }
+            public string Csv()
+            {
+                return CsvFile;
             }
         }
     }

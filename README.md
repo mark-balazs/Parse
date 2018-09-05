@@ -76,3 +76,4 @@ Description:
 * The script extracts the .csv file to tokens(fields);
 * Certain fields are used (ex. Effort completed, Entity type etc.)
 * Data is filtered by developer names (for statistic purposes)
+* The script is called by the Parse, after creating the changelog.

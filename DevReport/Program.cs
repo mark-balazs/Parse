@@ -17,6 +17,7 @@ namespace DevReport
         {
             Reporter reporter = new Reporter(args);
             reporter.MakeReport();
+            reporter.Serializer();
         }
     }
 }

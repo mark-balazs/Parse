@@ -10,6 +10,7 @@ using static System.Environment;
 using static System.IO.Directory;
 using System.Runtime.InteropServices;
 using static MainLibrary.Program;
+using Newtonsoft.Json;
 
 
 namespace MainLibrary
@@ -17,6 +18,7 @@ namespace MainLibrary
     public class Reporter : MainClass
     {
         protected string xlPath;
+        protected string jsPath;
         protected Application xlApp { get; set; }
         protected Workbook xlWorkBook { get; set; }
         protected Worksheet xlWorkSheet { get; set; }
@@ -59,6 +61,7 @@ namespace MainLibrary
             CsvFile = Args[0];
             //CsvFile = @"D:\Informatics\Intern projects\Parse\DevReport\sample.csv";
             xlPath = GetCurrentDirectory() + "report.xlsx";
+            jsPath = GetCurrentDirectory() + "developers.json";
         }
 
         protected void BuildEntities()
@@ -153,6 +156,12 @@ namespace MainLibrary
                 }
             }
             return name;
+        }
+
+        public void Serializer()
+        {
+            string serializedData = JsonConvert.SerializeObject(Developers.Container);
+            WriteAllText(jsPath, serializedData);
         }
     }
 }

@@ -189,6 +189,7 @@ namespace MainLibrary
                 if (tokens.Count() < 84)
                 {
                     WriteLine("ERROR: Too few data in file \"" + CsvFile + "\".");
+                    Environment.Exit(0);
                     ArgNum--;
                 }
                 return tokens;

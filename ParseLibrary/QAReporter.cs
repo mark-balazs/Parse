@@ -28,7 +28,7 @@ namespace MainLibrary
         protected new void SetFilePaths()
         {
             CsvFile = Args[0];
-            CsvFile = @"D:\\Sprint Planning.csv";
+            //CsvFile = @"D:\\Sprint Planning.csv";
             xlPath = GetCurrentDirectory() + "qareport.xlsx";
             //jsPath = GetCurrentDirectory() + "testers.json";
         }
@@ -79,7 +79,6 @@ namespace MainLibrary
             else
                 Testers.Container[Testers.Index(name)].Defects.Add(tokens[index + 39], 1);
         }
-
         protected new void AddUS(string name, int index)
         {
             Testers.Container[Testers.Index(name)].UserStoriesSum++;
@@ -89,7 +88,6 @@ namespace MainLibrary
                 Testers.Container[Testers.Index(name)].UserStories.Add(tokens[index + 39], 1);
 
         }
-
         protected new void WriteToSheet()
         {
             xlWorkSheet.Name = "Sum";

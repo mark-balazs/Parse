@@ -59,6 +59,7 @@
     <Compile Include="QAReporter.cs" />
     <Compile Include="Reporter.cs" />
     <Compile Include="Tester.cs" />
+    <Compile Include="Ticket.cs" />
     <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>

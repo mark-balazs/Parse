@@ -28,7 +28,7 @@ namespace MainLibrary
         protected new void SetFilePaths()
         {
             CsvFile = Args[0];
-            CsvFile = @"D:\\Sprint Planning.csv";
+            //CsvFile = @"D:\\Sprint Planning.csv";
             xlPath = GetCurrentDirectory() + "qareport.xlsx";
             //jsPath = GetCurrentDirectory() + "testers.json";
         }

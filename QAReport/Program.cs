@@ -11,7 +11,8 @@ namespace QAReport
     {
         static void Main(string[] args)
         {
-            QAReporter reporter = new QAReporter(args);
+            string[] a = { "a" };
+            QAReporter reporter = new QAReporter(a);
             reporter.MakeReport();
         }
     }

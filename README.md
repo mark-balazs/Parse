@@ -95,3 +95,9 @@ Description:
 * Certain fields are used (ex. Effort completed, Entity type etc.)
 * Data is filtered by developer names (for statistic purposes)
 * The script is called by the Parse, after creating the changelog.
+
+Usage:
+=====
+* Run the .exe file from command prompt
+* It should be given the .csv file as an argument (absolute path)
+* The program displays the path of the report upon exiting - it is the current working directory/qareport.xlsx

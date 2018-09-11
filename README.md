@@ -12,8 +12,8 @@ Task
 Create an application to parse .csv files into .json files.  
 * Firstly, the application will be running from command line, make sure to set shortcuts and aliases;  
 * The app should be able to handle files as arguments;  
-* Make it user-friendly with shortcuts;  
-* Make it possible to pass data from keyboard;
+* Make it is user-friendly with shortcuts;  
+* Make it is possible to pass data from keyboard;
 
 Usage:
 =====

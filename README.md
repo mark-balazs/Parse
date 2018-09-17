@@ -86,7 +86,7 @@ Description:
 Project 3: QAReport
 ==
 
-A script used for creating .xlsx files (reports) from .scv files for our QA (tester) team.
+A script used for creating .xlsx files (reports) from .csv files for our QA (tester) team.
 
 Task
 =====

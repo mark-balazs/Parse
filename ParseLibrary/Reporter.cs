@@ -42,7 +42,7 @@ namespace MainLibrary
                 xlWorkSheet = xlWorkBook.Worksheets.get_Item(1);
             }
             GetArgsNumber();
-            if (ArgNum != 1)
+            if (ArgNum < 1)
             {
                 WriteLine("Arguments do not meet the requirements for creating a report.");
                 Exit(0);
@@ -61,7 +61,7 @@ namespace MainLibrary
             CsvFile = Args[0];
             //CsvFile = @"D:\Informatics\Intern projects\Parse\DevReport\sample.csv";
             xlPath = GetCurrentDirectory() + "devreport.xlsx";
-            jsPath = GetCurrentDirectory() + "developers.json";
+            jsPath = @"D:/Informatics/Javascript/Development2/Development-visualization/developers.json";
         }
 
         protected void BuildEntities()
@@ -99,18 +99,62 @@ namespace MainLibrary
         {
             Developers.Container[Developers.Index(name)].Defects++;
             if (tokens[index + 36] == "Rejected" || tokens[index + 36] == "Done" || tokens[index + 36] == "Integration Testing Passed")
+            {
                 Developers.Container[Developers.Index(name)].DefectsDone++;
+                Ticket ticket = new Ticket();
+                ticket.Id = tokens[index + 1];
+                ticket.EventType = tokens[index];
+                ticket.Priority = tokens[index + 35];
+                ticket.Title = tokens[index + 2];
+                ticket.State = tokens[index + 36];
+                ticket.Severity = tokens[index + 39];
+                Developers.Container[Developers.Index(name)].DefectsContainer.Add(ticket);
+                Developers.Container[Developers.Index(name)].DefectsDoneContainer.Add(ticket);
+            }
             else
+            {
                 Developers.Container[Developers.Index(name)].DefectsToDo++;
+                Ticket ticket = new Ticket();
+                ticket.Id = tokens[index + 1];
+                ticket.EventType = tokens[index];
+                ticket.Priority = tokens[index + 35];
+                ticket.Title = tokens[index + 2];
+                ticket.State = tokens[index + 36];
+                ticket.Severity = tokens[index + 39];
+                Developers.Container[Developers.Index(name)].DefectsToDoContainer.Add(ticket);
+                Developers.Container[Developers.Index(name)].DefectsContainer.Add(ticket);
+            }
         }
 
         protected void AddUS(string name, int index)
         {
             Developers.Container[Developers.Index(name)].UserStories++;
             if (tokens[index + 36] == "Rejected" || tokens[index + 36] == "Done" || tokens[index + 36] == "Integration Testing Passed")
+            {
                 Developers.Container[Developers.Index(name)].USDone++;
+                Ticket ticket = new Ticket();
+                ticket.Id = tokens[index + 1];
+                ticket.EventType = tokens[index];
+                ticket.Priority = tokens[index + 35];
+                ticket.Title = tokens[index + 2];
+                ticket.State = tokens[index + 36];
+                ticket.Severity = tokens[index + 39];
+                Developers.Container[Developers.Index(name)].USDoneContainer.Add(ticket);
+                Developers.Container[Developers.Index(name)].UserStoriesContainer.Add(ticket);
+            }
             else
+            {
                 Developers.Container[Developers.Index(name)].USToDo++;
+                Ticket ticket = new Ticket();
+                ticket.Id = tokens[index + 1];
+                ticket.EventType = tokens[index];
+                ticket.Priority = tokens[index + 35];
+                ticket.Title = tokens[index + 2];
+                ticket.State = tokens[index + 36];
+                ticket.Severity = tokens[index + 39];
+                Developers.Container[Developers.Index(name)].USToDoContainer.Add(ticket);
+                Developers.Container[Developers.Index(name)].UserStoriesContainer.Add(ticket);
+            }
             Developers.Container[Developers.Index(name)].Effort += Double.Parse(tokens[index + 15]);
         }
 
@@ -140,8 +184,11 @@ namespace MainLibrary
             xlWorkBook.SaveAs(xlPath);
             WriteLine("Report saved as " + xlPath);
 
+            Marshal.FinalReleaseComObject(xlWorkSheet);
             xlWorkBook.Close(0);
+            Marshal.FinalReleaseComObject(xlWorkBook);
             xlApp.Quit();
+            Marshal.FinalReleaseComObject(xlApp);
         }
 
         protected string FixTypos(string name)

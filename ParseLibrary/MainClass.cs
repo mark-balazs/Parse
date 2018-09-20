@@ -74,8 +74,8 @@ namespace MainLibrary
                         }
                         break;
                     case 2:
-                        LogPath = Args[0];
-                        CsvFile = Args[1];
+                        LogPath = Args[1];
+                        CsvFile = Args[0];
                         break;
                 }
             }

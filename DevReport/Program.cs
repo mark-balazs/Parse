@@ -18,6 +18,7 @@ namespace DevReport
             Reporter reporter = new Reporter(args);
             reporter.MakeReport();
             reporter.Serializer();
+            System.Diagnostics.Process.Start("file:///D:/Informatics/Javascript/Development2/Development-visualization/index.html");
         }
     }
 }

@@ -16,6 +16,12 @@ namespace MainLibrary
         public int USDone { get; set; }
         public int USToDo { get; set; }
         public double Effort { get; set; }
+        public List<Ticket> UserStoriesContainer { get; set; }
+        public List<Ticket> DefectsContainer { get; set; }
+        public List<Ticket> DefectsDoneContainer { get; set; }
+        public List<Ticket> DefectsToDoContainer { get; set; }
+        public List<Ticket> USDoneContainer { get; set; }
+        public List<Ticket> USToDoContainer { get; set; }
 
         public Developer(string name)
         {

@@ -7,6 +7,7 @@ using static System.Console;
 using Microsoft.Office.Interop.Excel;
 using static System.IO.File;
 using static System.IO.Directory;
+using System.Runtime.InteropServices;
 
 namespace MainLibrary
 {
@@ -228,8 +229,11 @@ namespace MainLibrary
             xlWorkSheet.Select();
             xlWorkBook.SaveAs(xlPath);
             WriteLine("Report saved as " + xlPath);
+            Marshal.FinalReleaseComObject(xlWorkSheet);
             xlWorkBook.Close(0);
+            Marshal.FinalReleaseComObject(xlWorkSheet);
             xlApp.Quit();
+            Marshal.FinalReleaseComObject(xlWorkSheet);
         }
     }
 }

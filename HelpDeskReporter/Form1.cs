@@ -25,9 +25,9 @@ namespace HelpDeskReporter
         {
             opf1.Multiselect = true;
             opf1.Filter = "csv|*.csv";
-            if(opf1.ShowDialog()==DialogResult.OK)
+            if (opf1.ShowDialog() == DialogResult.OK)
             {
-                foreach(string name in opf1.FileNames)
+                foreach (string name in opf1.FileNames)
                 {
                     textBox1.Text += name + ",";
                 }
@@ -51,15 +51,48 @@ namespace HelpDeskReporter
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text==""||textBox2.Text=="" || textBox3.Text=="")
+            if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" | textBox5.Text == "")
             {
                 MessageBox.Show("There are some empty fields!");
                 return;
             }
             MainLibrary.HDReporter reporter = new MainLibrary.HDReporter(opf1.FileNames, opf2.FileName);
             reporter.SaveFolder = fbd.SelectedPath;
+            reporter.TollFreeReports = opf4.FileNames;
+            reporter.CsvPathsSeparate = opf3.FileNames;
             reporter.MakeReport();
             MessageBox.Show("Files processed succesfully.");
+            Close();
+        }
+
+        OpenFileDialog opf3 = new OpenFileDialog();
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            opf3.Multiselect = true;
+            opf3.Filter = "csv|*.csv";
+            if (opf3.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string name in opf3.FileNames)
+                {
+                    textBox5.Text += name + ",";
+                }
+            }
+        }
+
+        OpenFileDialog opf4 = new OpenFileDialog();
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            opf4.Multiselect = true;
+            opf4.Filter = "csv|*.csv";
+            if (opf4.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string name in opf4.FileNames)
+                {
+                    textBox4.Text += name + ",";
+                }
+            }
         }
     }
 }

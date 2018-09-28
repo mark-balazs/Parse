@@ -51,13 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bill.cs" />
     <Compile Include="Changelog.cs" />
-    <Compile Include="Conversation.cs" />
     <Compile Include="DevContainer.cs" />
     <Compile Include="Developer.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="HDReporter.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="MainObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
